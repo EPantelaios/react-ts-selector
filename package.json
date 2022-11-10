@@ -1,0 +1,25 @@
+{
+  "name": "react-ts-selector",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --fix --ext .ts,.tsx",
+    "removeAll": "rm -rf node_modules && rm -f package-lock.json && npm cache clean --force"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "@vitejs/plugin-react": "^2.2.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.2.3"
+  }
+}
