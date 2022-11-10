@@ -18,7 +18,7 @@ label {
   padding: .5em;
   border-radius: .25em;
   outline: none;
-  margin-bottom: 3rem;
+  margin-bottom: 10rem;
 }
 
 .container:focus {
@@ -40,23 +40,31 @@ label {
   cursor: pointer;
   padding: 0;
   font-size: 1.25em;
+  color: hsl(0, 100%, 65%);
 }
 
 .clear-btn:focus,
 .clear-btn:hover {
-  color: #333;
+  color: hsl(0, 100%, 50%);
 }
+
 
 .divider {
   background-color: #777;
   align-self: stretch;
   width: .05em;
+  margin: 0 0.2em;
 }
 
-.caret {
-  translate: 0 25%;
+
+button.caret {
+  all: unset;
+  translate: 0 10%;
+  padding: auto 1em;
   border: .25em solid transparent;
   border-top-color: #777;
+  cursor: pointer;
+  margin: auto 0.25em;
 }
 
 .options {
@@ -87,9 +95,38 @@ label {
 
 .option.selected {
   background-color: hsl(200, 100%, 70%);
+  border-bottom: 1px solid hsl(200, 100%, 50%);
 }
 
 .option.highlighted {
   background-color: hsl(200, 100%, 50%);
   color: white
+}
+
+.option-badge {
+  display: flex;
+  align-items: center;
+  border: .05em solid #777;
+  border-radius: .25em;
+  padding: .15em .25em;
+  gap: .25em;
+  cursor: pointer;
+  background: none;
+  outline: none;
+}
+
+.option-badge:hover,
+.option-badge:focus {
+  background-color: hsl(0, 100%, 90%);
+  border-color: hsl(0, 100%, 50%);
+}
+
+.option-badge:hover>.remove-btn,
+.option-badge:focus>.remove-btn {
+  color: hsl(0, 100%, 50%);
+}
+
+.option-badge>.remove-btn {
+  font-size: 1.25em;
+  color: #777;
 }
