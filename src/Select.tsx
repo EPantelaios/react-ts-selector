@@ -6,27 +6,45 @@ export type SelectOption = {
   value: string | number;
 };
 
-type SelectProps = {
-  options: SelectOption[];
+type MultipleSelectProps = {
+  multiple: true;
+  value: SelectOption[];
+  onChange: (value: SelectOption[]) => void;
+};
+
+type SingleSelectProps = {
+  multiple?: false;
   value?: SelectOption;
   onChange: (value: SelectOption | undefined) => void;
 };
 
-export function Select({ value, onChange, options }: SelectProps) {
+type SelectProps = {
+  options: SelectOption[];
+} & (SingleSelectProps | MultipleSelectProps);
+
+export function Select({ multiple, value, onChange, options }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   function clearOptions() {
-    onChange(undefined);
+    multiple ? onChange([]) : onChange(undefined);
   }
 
   function selectOption(option: SelectOption) {
-    if (option !== value) onChange(option);
+    if (multiple) {
+      if (value.includes(option)) {
+        onChange(value.filter((cur) => cur !== option));
+      } else {
+        onChange([...value, option]);
+      }
+    } else {
+      if (option !== value) onChange(option);
+    }
   }
 
   function isOptionSelected(option: SelectOption) {
-    return option === value;
+    return multiple ? value.includes(option) : option === value;
   }
 
   useEffect(() => {
@@ -75,18 +93,36 @@ export function Select({ value, onChange, options }: SelectProps) {
       tabIndex={0}
       className={styles.container}
     >
-      <span className={styles.value}>{value?.label}</span>
+      <span className={styles.value}>
+        {multiple
+          ? value.map((v) => (
+              <button
+                key={v.value}
+                type='button'
+                className={styles['option-badge']}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  selectOption(v);
+                }}
+              >
+                {v.label}
+                <span className={styles['remove-btn']}>&times;</span>
+              </button>
+            ))
+          : value?.label}
+      </span>
       <button
         onClick={(e) => {
           e.stopPropagation();
           clearOptions();
         }}
+        onMouseLeave={() => (document.activeElement as HTMLElement).blur()}
         className={styles['clear-btn']}
       >
         &times;
       </button>
       <div className={styles.divider}></div>
-      <div className={styles.caret}></div>
+      <button type='button' className={styles.caret} />
       <ul className={`${styles.options} ${isOpen ? styles.show : ''}`}>
         {options.map((option, index) => (
           <li

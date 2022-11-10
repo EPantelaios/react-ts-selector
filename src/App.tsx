@@ -11,14 +11,23 @@ const options = [
 
 function App() {
   const [singleValue, setSingleValue] = useState<SelectOption | undefined>(options[0]);
+  const [multipleValues, setMultipleValues] = useState<SelectOption[]>([options[0]]);
 
   return (
     <>
       <label>Single input selector:</label>
       <Select
+        multiple={false}
         options={options}
         value={singleValue}
         onChange={(option) => setSingleValue(option)}
+      />
+      <label>Multiple input selectors:</label>
+      <Select
+        multiple={true}
+        options={options}
+        value={multipleValues}
+        onChange={(option) => setMultipleValues(option)}
       />
     </>
   );
