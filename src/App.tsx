@@ -1,13 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from 'react';
+import { Select, SelectOption } from './Select';
+
+const options = [
+  { label: 'First', value: 1 },
+  { label: 'Second', value: 2 },
+  { label: 'Third', value: 3 },
+  { label: 'Fourth', value: 4 },
+  { label: 'Fifth', value: 5 },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [singleValue, setSingleValue] = useState<SelectOption | undefined>(options[0]);
 
   return (
-  
-  )
+    <>
+      <label>Single input selector:</label>
+      <Select
+        options={options}
+        value={singleValue}
+        onChange={(option) => setSingleValue(option)}
+      />
+    </>
+  );
 }
 
-export default App
+export default App;
